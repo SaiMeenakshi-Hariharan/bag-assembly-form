@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> Bag Assembly and Distribution Form </title>
+<title> Homegrown Bag Assembly Form </title>
 <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
@@ -48,9 +48,53 @@
 		margin-bottom: 20px;
 		white-space: nowrap;
     }
+	
+	h5 {
+        text-align: center;
+		justify-content: center;
+        font-weight: normal;
+		margin-bottom: 20px;
+		white-space: nowrap;
+    }
     
     input {
         width: 220px;
+        background: none;
+        border: 1px solid #fff;
+        border-radius: 3px;
+        padding: 6px 15px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        font-size: 16px;
+		float: right;
+    }
+	
+	select {
+        width: 220px;
+        background: none;
+        border: 1px solid #fff;
+        border-radius: 3px;
+        padding: 6px 15px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        font-size: 16px;
+		float: right;
+    }
+	
+	.quantext {
+        width: 220px;
+        background: none;
+        border: 1px solid #fff;
+        border-radius: 3px;
+        padding: 6px 15px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        font-size: 16px;
+		float: left;
+    }
+	
+	.shortselect {
+        width: 40px;
         background: none;
         border: 1px solid #fff;
         border-radius: 3px;
@@ -116,11 +160,15 @@
 	  transform: scale(2);
 	}
 	
-	label {
+	.label-class {
 		float: left;
 	}
 	
-	label:after {
+	.checkbox-label {
+		float: right;
+	}
+	
+	.mand:after {
 		color: #e32;
 		content: ' *';
 		display:inline;
@@ -147,75 +195,113 @@
     <div class="centered">
     <div class="form-wrap" id="aggForm">
         <form>
-			<!-- <div><img src="C:\Users\saime\OneDrive\Pictures\Screenshots" alt="Homegrown Logo" style="float: left; width:200px; height: 75px;"><img src="C:\Users\saime\OneDrive\Pictures\Screenshots\Screenshot 2024-01-30 062001.png" alt="UC" style="float: right; width:150px; height: 75px;"></div><br><br><br><br> -->
-            <div><h3> Bag Assembly and Distribution Form </h3></div>
+            <div><h3> Homegrown Bag Assembly Form </h3></div>
+			<div><h5><i>(To be completed by Lela)</i></h5></div>
 			<div>
-            <label>Your Name:</label>
+            <label class="label-class mand">Your Name:</label>
 			<span><input type="text" name="name" id="name" pattern="^[^\d]+$" title="Enter a valid name" value="" required></span>
 			</div>
 			<div>
-            <label>Date:</label>
+            <label class="label-class mand">Date of Bag Assembly:</label>
 			<span><input type="date" id="pickupdate" name="pickupdate" required></span>
 			</div>
 			<div>
-            <label>Time:</label>
+            <label class="label-class mand">Time of Bag Assembly:</label>
 			<span><input type="time" id="pickuptime" name="pickuptime" required></span>
 			</div>
 			<div>
-            <label>Bag Assembly Location:</label>
+            <label class="label-class mand">Location of Bag Assembly:</label>
 			<span><input type="text" name="pickupadd" id="pickupadd" title="Enter a valid address" value="" required></span>
 			</div>
 			<div>
-            <label>Cohort Number:</label>
-			<span><input type="text" name="pickupadd" id="pickupadd" title="Enter a valid address" value="" required></span>
+            <label class="label-class mand">Cohort Number:</label>
+			<span><select name="pickupsite" id="pickupsite" required>
+				<option value="">-Select-</option> 
+				<option value="lfn">1</option>
+				<option value="supplier">2</option>
+				<option value="supplier">3</option>
+				<option value="supplier">4</option>
+			</select></span>
 			</div>
 			<div>
-            <label>Session Number:</label>
-			<span><input type="text" name="pickupadd" id="pickupadd" title="Enter a valid address" value="" required></span>
+            <label class="label-class mand">Session Number:</label>
+			<span><select name="pickupsite" id="pickupsite" required>
+				<option value="">-Select-</option> 
+				<option value="lfn">1</option>
+				<option value="supplier">2</option>
+				<option value="supplier">3</option>
+				<option value="supplier">4</option>
+				<option value="lfn">5</option>
+				<option value="supplier">6</option>
+				<option value="supplier">7</option>
+				<option value="supplier">8</option>
+			</select></span>
 			</div>
 			<div>
-            <label>Number of Homegrown NEP attendees:</label>
-			<span><input type="text" name="pickupadd" id="pickupadd" class="shortinput" title="Enter a valid address" value="" required></span>
+            <label class="label-class mand">Number of NEP attendees:</label>
+			<span><input type="number" name="pickupadd" id="pickupadd" title="Enter a valid address" value="" required></span>
 			</div>
 			<div>
-            <label>Total number of bags assembled:</label>
-			<span><input type="text" name="pickupadd" id="pickupadd" class="shortinput" title="Enter a valid address" value="" required></span>
+            <label class="label-class mand">Number of bags assembled:</label>
+			<span><input type="number" name="pickupadd" id="pickupadd" title="Enter a valid address" value="" required></span>
 			</div>
 			<div>
-            <label>Crops in each bag:</label>
-			<span><input type="text" name="pickupadd" id="pickupadd" title="Enter a valid address" value="" required></span>
+            <label class="label-class mand">Crop Name:</label>
+			<span>
+				<select name="cropsList" id="cropsList" required>
+				<option value="">-Select-</option> 
+				<option value="TOMATO">Tomato</option>
+				<option value="YELLOW ONION">Yellow Onion</option>
+				<option value="RED ONION">Red Onion</option>
+				<option value="GARLIC">Garlic</option>
+				<option value="SWEET POTATO">Sweet Potato</option>
+				<option value="RED BELL PEPPER">Red Bell Pepper</option>
+				<option value="SERRANO PEPPER">Serrano Pepper</option> 
+				<option value="JALAPEÑO PEPPER">Jalapeño Pepper</option>
+				<option value="HABANERO PEPPER">Habanero Pepper</option>
+				<option value="SCOTCH BONNET PEPPER">Scotch Bonnet Pepper</option>
+				<option value="CILANTRO">Cilantro</option>
+				<option value="PARSLEY">Parsley</option>
+				<option value="SHALLOTS">Shallots</option>
+				<option value="GREEN ONION">Green Onion</option>
+				<option value="BASIL">Basil</option>
+				<option value="CAYENNE PEPPER">Cayenne Pepper</option>
+				</select>
+			</span>
 			</div>
 			<div>
+            <label class="mand label-class">Quantity (with units):</label>
+			<span>
+				<input type="number" class="quantext" id="quantity" name="quantity">
+				<select name="units" class="shortselect" id="units" required>
+					<option value="">-Select-</option> 
+					<option value="lb">lb</option>
+					<option value="counts">counts</option>
+				</select>
+			</span>
+			</div>
+			<!-- <div>
             <label>Enter the Produce IDs of the crops in each bag:</label>
 			<span><button type="button" onclick="addProduce()">+</button></span>
 			<span><div id="produceInputs"></div></span>
+			</div> -->
+			<div>
+			<label class="label-class mand">Other items included:</label><br><br>
+			<span>
+				<input type="checkbox" id="tomato" name="tomato" value="Tomato">
+				  <label class="checkbox-label" for="tomato"> Recipe Card</label>
+				<input type="checkbox" id="yellowonion" name="yellowonion" value="Yellow Onion">
+				  <label class="checkbox-label" for="yellowonion"> Wash Me card</label>
+				<input type="checkbox" id="garlic" name="garlic" value="Garlic">
+				  <label class="checkbox-label" for="garlic"> Other</label>
+			</span><br><br>
 			</div>
 			<div>
-			<label>Other items included:</label><br>
-			<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-			  <label for="vehicle1"> Recipe Card</label><br>
-			 <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-			  <label for="vehicle2"> Emergency Contact List</label><br>
-			 <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-			  <label for="vehicle3"> Other</label>
+			<label class="label-class">Upload a Photo:</label>
+			<span><input type="file" title="Enter a valid name"></span>
 			</div>
 			<div>
-			<label>Inserts included:</label><br>
-			<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-			  <label for="vehicle1"> Wash Me Card</label><br>
-			 <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-			  <label for="vehicle2"> Recipe Card</label><br>
-			</div>
-			<div>
-            <label>Were food bins/crates returned to the distributor?</label>
-			<span><select name="producecleaned" id="producecleaned" required>
-				<option value="">-Select-</option>
-				<option value="yes">Yes</option>
-				<option value="no">No</option>
-			</select></span><br>
-			</div>
-			<div>
-			<label>Comments:</label>
+			<label class="label-class">Comments:</label>
 			<span><input type="text" title="Enter a valid name"></span>
 			</div><br>
             <button type="Submit" class="btn">Submit ></button><br>			
@@ -230,16 +316,30 @@
 	</div>
 </body>
 <script>
-function addProduce() {
+//function addProduce() {
   // Create a new input field
-  var input = document.createElement("input");
+  //var input = document.createElement("input");
 
   // Set the type of input field & label
-  input.type = "text";
-  input.label = "Produce ID"
+  //input.type = "text";
+  //input.label = "Produce ID"
 
   // Add the input field to the form
-  document.getElementById("produceInputs").appendChild(input);
+  //document.getElementById("produceInputs").appendChild(input);
 }
+
+// Get the form element
+const form = document.querySelector('form');
+
+// Add a submit event listener to the form
+form.addEventListener('submit', function(event) {
+  // Prevent the form from submitting
+  event.preventDefault();
+
+//var produceId = document.getElementById("produceid").value;
+  // Display a success message
+  alert('Form submitted successfully!);
+});
+
 </script>
 </html>
