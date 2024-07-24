@@ -264,35 +264,35 @@
 			</div>
 			<div>
             <label class="label-class mand">Location of Bag Assembly:</label>
-			<span><input type="text" name="pickupadd" id="pickupadd" title="Enter a valid address" value="" required></span>
+			<span><input type="text" name="pickuplocation" id="pickupadd" title="Enter a valid address" value="" required></span>
 			</div>
 			<div>
             <label class="label-class mand">Cohort Number:</label>
-			<span><select name="pickupsite" id="pickupsite" required>
+			<span><select name="cohort" id="pickupsite" required>
 				<option value="">-Select-</option> 
-				<option value="lfn">1</option>
-				<option value="supplier">2</option>
-				<option value="supplier">3</option>
-				<option value="supplier">4</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
 			</select></span>
 			</div>
 			<div>
             <label class="label-class mand">Session Number:</label>
-			<span><select name="pickupsite" id="pickupsite" required>
+			<span><select name="session" id="pickupsite" required>
 				<option value="">-Select-</option> 
-				<option value="lfn">1</option>
-				<option value="supplier">3</option>
-				<option value="lfn">5</option>
-				<option value="supplier">7</option>
+				<option value="1">1</option>
+				<option value="3">3</option>
+				<option value="5">5</option>
+				<option value="7">7</option>
 			</select></span>
 			</div>
 			<div>
             <label class="label-class mand">Number of attendees:</label>
-			<span><input type="number" name="pickupadd" id="pickupadd" title="Enter a valid address" value="" required></span>
+			<span><input type="number" name="attendees" id="pickupadd" title="Enter a valid address" value="" required></span>
 			</div>
 			<div>
             <label class="label-class mand">Number of bags assembled:</label>
-			<span><input type="number" name="pickupadd" id="pickupadd" title="Enter a valid address" value="" required></span>
+			<span><input type="number" name="bags" id="pickupadd" title="Enter a valid address" value="" required></span>
 			</div>
 			<div id="produce-details">
             
@@ -301,22 +301,26 @@
 			<div>
 			<label class="label-class mand">Other items included:</label><br><br>
 			<span>
-				<input type="checkbox" id="tomato" name="tomato" value="Tomato">
-				  <label class="checkbox-label" for="tomato"> Recipe Card</label>
-				<input type="checkbox" id="yellowonion" name="yellowonion" value="Yellow Onion">
-				  <label class="checkbox-label" for="yellowonion"> Wash Me card</label>
-				<input type="checkbox" id="garlic" name="garlic" value="Garlic">
-				  <label class="checkbox-label" for="garlic"> Other</label>
+				<input type="checkbox" id="recipe-card" name="recipecard" value="Recipe Card">
+				  <label class="checkbox-label" for="recipecard"> Recipe Card</label>
+				<input type="checkbox" id="wash-me-card" name="washmecard" value="Wash Me Card">
+				  <label class="checkbox-label" for="washmecard"> Wash Me card</label>
+				<input type="checkbox" id="other-item" name="otheritem" value="Other">
+				  <label class="checkbox-label" for="otheritem"> Other</label>
 			</span><br><br>
 			</div>
 			<div>
 			<label class="label-class">Upload a Photo:</label>
-			<span><input type="file" multiple="" data-max_length="5" accept=".jpg,.jpeg, .png" title="Enter a valid name"></span>
+			<span><input type="file" multiple="" data-max_length="5" accept=".jpg,.jpeg, .png" title="Enter a valid name" name="bagassemblyphoto"></span>
 			</div>
 			<div><h5><i><b>Note:</b>&nbsp;Please Upload a Closeup of the Produce item(s). Also, to select multiple files, hold down the CTRL or SHIFT key while selecting.</i></h5></div>
 			<div>
 			<label class="label-class">Comments:</label>
-			<span><input type="text" title="Enter a valid name"></span>
+			<span><input type="text" title="Enter comments" name="comments"></span>
+			<span><input type="hidden" name="cropsreceivedlist" id="cropsreceivedlist"></span>
+			<span><input type="hidden" name="quantitylist" id="quantitylist"></span>
+			<span><input type="hidden" name="unitslist" id="unitslist"></span>
+			<span><input type="hidden" name="otheritemslist" id="otheritemslist"></span>
 			</div><br>
             <button type="Submit" class="btn">Submit ></button><br>			
 			<div class="alert alert-success alert-dismissible" style="display: {{ display }};">
@@ -392,6 +396,76 @@ const form = document.querySelector('form');
 form.addEventListener('submit', function(event) { debugger;
   // Prevent the form from submitting
   //event.preventDefault();
+
+const otherItems = [];
+const isRecipeCardChecked = document.getElementById("recipe-card").checked;
+const isWashMeCardChecked = document.getElementById("wash-me-card").checked;
+const isOtherItemChecked = document.getElementById("other-item").checked;
+
+if (isRecipeCardChecked) {
+  otherItems.push(document.getElementById("recipe-card").value);
+} 
+						 
+if (isWashMeCardChecked) {
+  otherItems.push(document.getElementById("wash-me-card").value);
+}
+
+if (isOtherItemChecked) {
+  otherItems.push(document.getElementById("other-item").value);
+}
+
+if (otherItems.length > 0) {
+	document.getElementById('otheritemslist').value = otherItems.join(', ');
+}
+
+const cropsReceived = [];
+const quantities = [];
+const unitsList = [];
+						 
+    const produceDivs = document.querySelectorAll('.new-produce');
+    
+    produceDivs.forEach(function(produceDiv) {	    
+	const cropsInput = produceDiv.querySelector('#cropsList');
+        if (cropsInput && cropsInput.value) {
+            cropsReceived.push(cropsInput.value);
+	    document.getElementById('cropsreceivedlist').value = cropsReceived.join(', ');
+        }
+	    
+	const quantitiesInput = produceDiv.querySelector('#quantity');
+        if (quantitiesInput && quantitiesInput.value) {
+            quantities.push(quantitiesInput.value);
+	    document.getElementById('quantitylist').value = quantities.join(', ');
+        }
+	    
+	const unitsInput = produceDiv.querySelector('#units');
+        if (unitsInput && unitsInput.value) {
+            unitsList.push(unitsInput.value);
+	    document.getElementById('unitslist').value = unitsList.join(', ');
+        }
+    });
+
+    const formData = new FormData(this);
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+
+    fetch('https://script.google.com/macros/s/AKfycby1TBWCa7m8X0dWEEw74hcXNDKJDo1sQ_XE1k7zbIWIzjFfkNLAL1c0jmniC-P4du32_A/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.text())
+    .then(result => {
+      console.log('Success:', result);
+      // Handle the success response here
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle the error here
+    });
   
 	$('#messages').removeClass('hide').addClass('alert alert-success alert-dismissible').slideDown().show();
 	$('#messages_content').html('<h4>Form Submitted Successfully!</h4>');
