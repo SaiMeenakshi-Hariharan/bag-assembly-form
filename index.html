@@ -12,7 +12,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 <style>
     * {
@@ -311,7 +310,7 @@
 			</div>
 			<div>
 			<label class="label-class">Upload a Photo:</label>
-			<span><input type="file" multiple="" data-max_length="5" accept=".jpg,.jpeg, .png" title="Enter a valid name" name="bagassemblyphoto"></span>
+			<span><input type="file" multiple="" data-max_length="5" accept=".jpg,.jpeg, .png" title="Enter a valid name" name="bagassemblyphoto" id="bag-assembly-photo"></span>
 			</div>
 			<div><h5><i><b>Note:</b>&nbsp;Please Upload a Closeup of the Produce item(s). Also, to select multiple files, hold down the CTRL or SHIFT key while selecting.</i></h5></div>
 			<div>
@@ -352,14 +351,24 @@ function addProduceDetails() {
 				<option value="YELLOW ONION">Yellow Onion</option>
 				<option value="RED ONION">Red Onion</option>
 				<option value="GARLIC">Garlic</option>
+				<option value="GINGER">Ginger</option>
+				<option value="COLLARDS">Collards</option>
+				<option value="MUSTARDS">Mustards</option>
 				<option value="SWEET POTATO">Sweet Potato</option>
 				<option value="RED BELL PEPPER">Red Bell Pepper</option>
 				<option value="SERRANO PEPPER">Serrano Pepper</option> 
 				<option value="JALAPEÑO PEPPER">Jalapeño Pepper</option>
 				<option value="HABANERO PEPPER">Habanero Pepper</option>
 				<option value="SCOTCH BONNET PEPPER">Scotch Bonnet Pepper</option>
+				<option value="CORN">Corn</option>
+				<option value="BLACK BEANS">Black Beans</option>
+				<option value="BLACK EYED PEAS">Black Eyed Peas</option>
 				<option value="CILANTRO">Cilantro</option>
+				<option value="LEMONGRASS">Lemongrass</option>
+				<option value="CELERY">Celery</option>
+				<option value="PUMPKIN">Pumpkin</option>
 				<option value="PARSLEY">Parsley</option>
+				<option value="LEEKS">Leeks</option>
 				<option value="SHALLOTS">Shallots</option>
 				<option value="GREEN ONION">Green Onion</option>
 				<option value="BASIL">Basil</option>
@@ -393,9 +402,9 @@ function removeProduceDetails(input) {
 const form = document.querySelector('form');
 
 // Add a submit event listener to the form
-form.addEventListener('submit', function(event) { debugger;
+form.addEventListener('submit', function(event) {
   // Prevent the form from submitting
-  //event.preventDefault();
+	event.preventDefault();
 
 const otherItems = [];
 const isRecipeCardChecked = document.getElementById("recipe-card").checked;
@@ -445,12 +454,44 @@ const unitsList = [];
     });
 
     const formData = new FormData(this);
+    const fileInput = document.getElementById('bag-assembly-photo');
+      const files = fileInput.files;
+
+      if (files.length > 0) {
+        const fileReaders = [];
+        const base64Strings = [];
+        const fileTypes = [];
+
+        for (let i = 0; i < files.length; i++) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            base64Strings.push(e.target.result.split(',')[1]); // Base64 string
+            fileTypes.push(files[i].type); // File MIME type
+            if (base64Strings.length === files.length) {
+              formData.append('photoData', JSON.stringify(base64Strings));
+              formData.append('fileTypes', JSON.stringify(fileTypes));
+	      sendData(formData);
+	    }
+	  };
+
+	  reader.onerror = function(e) {
+	        console.error("Error reading file: ", files[i].name, e);
+	  };
+
+	  reader.readAsDataURL(files[i]);
+	}
+      } else {
+	sendData(formData);
+      }		  
+});
+    
+function sendData(formData) {
     const data = {};
     formData.forEach((value, key) => {
       data[key] = value;
     });
 
-    fetch('https://script.google.com/macros/s/AKfycbwkhHWmng5eVJYM3dT2RP04gTh9glFmV99-BMZSLBLA8Eyb_Y8t-V6ZPTplEEWImKgZGw/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbwuMgv5nSNYrm20XeJiYpM4CWDUccj0LxZnDzZv6VpQ9vcVFcjU5KExTMFXOwB-nxsTaA/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'text/plain;charset=utf-8',
@@ -469,8 +510,7 @@ const unitsList = [];
   
 	$('#messages').removeClass('hide').addClass('alert alert-success alert-dismissible').slideDown().show();
 	$('#messages_content').html('<h4>Form Submitted Successfully!</h4>');
-	event.preventDefault();
-});
+}
 
 </script>
 </body>
